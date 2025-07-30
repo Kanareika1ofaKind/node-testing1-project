@@ -7,7 +7,15 @@
  * trimProperties({ name: '  jane  ' }) // returns a new object { name: 'jane' }
  */
 function trimProperties(obj) {
-  // ✨ implement
+    // ✨ implement
+    const trimmedObj = {};
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            trimmedObj[key] = obj[key].trim();
+        }
+    }
+    return trimmedObj;
+
 }
 
 /**
@@ -19,7 +27,13 @@ function trimProperties(obj) {
  * trimPropertiesMutation({ name: '  jane  ' }) // returns the object mutated in place { name: 'jane' }
  */
 function trimPropertiesMutation(obj) {
-  // ✨ implement
+    // ✨ implement
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            obj[key] = obj[key].trim();
+        }
+    }
+    return obj;
 }
 
 /**
@@ -31,7 +45,15 @@ function trimPropertiesMutation(obj) {
  * findLargestInteger([{ integer: 1 }, { integer: 3 }, { integer: 2 }]) // returns 3
  */
 function findLargestInteger(integers) {
-  // ✨ implement
+    // ✨ implement
+    if (integers.length === 0) return null; // Handle empty array case
+    let largest = integers[0].integer; // Start with the first integer
+    for (const obj of integers) {
+        if (obj.integer > largest) {
+            largest = obj.integer; // Update largest if current integer is greater
+        }
+    }
+    return largest;
 }
 
 class Counter {
@@ -40,7 +62,8 @@ class Counter {
    * @param {number} initialNumber - the initial state of the count
    */
   constructor(initialNumber) {
-    // ✨ initialize whatever properties are needed
+      // ✨ initialize whatever properties are needed
+      this.count = initialNumber; // Initialize the count with the provided initial number
   }
 
   /**
@@ -55,9 +78,13 @@ class Counter {
    * counter.countDown() // returns 0
    * counter.countDown() // returns 0
    */
-  countDown() {
+    countDown() { }
     // ✨ implement
-  }
+    countDown() {
+        return this.count > 0 ? this.count-- : 0; // Decrement count if greater than zero, otherwise return zero
+    }
+
+
 }
 
 class Seasons {
@@ -65,7 +92,9 @@ class Seasons {
    * [Exercise 5A] Seasons creates a seasons object
    */
   constructor() {
-    // ✨ initialize whatever properties are needed
+      // ✨ initialize whatever properties are needed
+      this.seasons = ['summer', 'fall', 'winter', 'spring']; // Array of seasons
+      this.currentSeason = 0; // Index to track the current season
   }
 
   /**
@@ -80,9 +109,11 @@ class Seasons {
    * seasons.next() // returns "spring"
    * seasons.next() // returns "summer"
    */
-  next() {
-    // ✨ implement
-  }
+    next() {
+        const season = this.seasons[this.currentSeason]; // Get the current season
+        this.currentSeason = (this.currentSeason + 1) % this.seasons.length; // Move to the next season, wrapping around
+        return season; // Return the current season
+    }
 }
 
 class Car {
@@ -94,8 +125,11 @@ class Car {
    */
   constructor(name, tankSize, mpg) {
     this.odometer = 0 // car initilizes with zero miles
-    this.tank = tankSize // car initiazes full of gas
-    // ✨ initialize whatever other properties are needed
+      this.tank = tankSize // car initiazes full of gas
+      this.tankSize = tankSize; // Capacity of the gas tank in gallons
+      // ✨ initialize whatever other properties are needed
+      this.name = name; // Name of the car
+      this.mpg = mpg; // Miles per gallon the car can drive
   }
 
   /**
@@ -112,7 +146,13 @@ class Car {
    * focus.drive(200) // returns 600 (ran out of gas after 100 miles)
    */
   drive(distance) {
-    // ✨ implement
+      // ✨ implement
+      const maxDistance = this.tank * this.mpg; // Calculate maximum distance based on tank size and mpg
+      if (distance <= maxDistance) {
+            this.odometer += distance; // If distance is within range, update odometer
+            this.tank -= distance / this.mpg; // Decrease tank based on distance driven
+          return this.odometer; // Return updated odometer
+      }
   }
 
   /**
@@ -127,7 +167,14 @@ class Car {
    * focus.refuel(99) // returns 600 (tank only holds 20)
    */
   refuel(gallons) {
-    // ✨ implement
+      // ✨ implement
+      const maxGallons = this.tank; // Maximum gallons the tank can hold
+        if (gallons > maxGallons) {
+            gallons = maxGallons; // If more gallons than tank size, set to max
+      }
+      this.tank += gallons; // Add gallons to the tank
+      const milesCanDrive = this.tank * this.mpg; // Calculate miles that can be driven after refueling
+      return milesCanDrive; // Return the miles that can be driven
   }
 }
 
@@ -145,7 +192,12 @@ class Car {
  * })
  */
 function isEvenNumberAsync(number) {
-  // ✨ implement
+    // ✨ implement
+  return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(number % 2 === 0); // Resolve true if number is even, false otherwise
+        }, 100); // Simulate async operation with a timeout
+  });
 }
 
 module.exports = {
